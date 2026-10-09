@@ -15,7 +15,7 @@ Play BeamNG.drive multiplayer ([BeamMP](https://beammp.com)) on an Apple Silicon
 - **BeamNG.drive** installed from Steam, with NotProton selected as its compatibility tool
 - The official **BeamMP installer** ([beammp.com](https://beammp.com))
 - `BeamMP-Launcher.exe` from the [egrm/BeamMP-Launcher-macOS](https://github.com/egrm/BeamMP-Launcher-macOS/releases) releases
-- `beammp-steam.sh` from this gist
+- [`beammp-steam.sh`](beammp-steam.sh) from this repo (step 3 downloads it for you)
 
 ## Setup
 
@@ -48,12 +48,17 @@ NotProton doesn't use CrossOver bottles. Each Steam game gets its own Wine prefi
 
 ### 3. Install the Play-button script
 
+Download the script from this repo into `~/BeamMP`:
+
 ```sh
 mkdir -p ~/BeamMP
-mv ~/Downloads/beammp-steam.sh ~/BeamMP/
+curl -fsSL -o ~/BeamMP/beammp-steam.sh \
+  https://raw.githubusercontent.com/dboggus/BeamMP-NotProton/main/beammp-steam.sh
 chmod +x ~/BeamMP/beammp-steam.sh            # don't skip this, Steam fails silently without it
+xattr -d com.apple.quarantine ~/BeamMP/beammp-steam.sh 2>/dev/null   # optional, see below
 ~/BeamMP/beammp-steam.sh echo "script runs"  # should print: script runs
-```
+
+> **About the `xattr` line:** browsers tag downloaded files with a `com.apple.quarantine` flag, which can make macOS block or prompt on files run outside Terminal. Removing the flag is a precaution, and the line does nothing if the flag isn't there. If `xattr ~/BeamMP/beammp-steam.sh` doesn't list `com.apple.quarantine`, you can skip it.
 
 ### 4. Point Steam at the script
 
@@ -75,6 +80,7 @@ Press **Play**. The BeamMP launcher window opens shortly after the game. At the 
 |---|---|
 | BeamMP mod | Automatic. The script checks for a new version each time you press Play. |
 | BeamMP launcher | Download the newest `BeamMP-Launcher.exe` from the egrm fork and copy it over the old one (step 2.2). |
+| `beammp-steam.sh` | Run the `curl` and `chmod` commands from step 3 again to get the latest version from this repo. |
 | NotProton / CrossOver | Nothing to do. The script uses whichever runner NotProton is currently using. |
 
 ## Options
