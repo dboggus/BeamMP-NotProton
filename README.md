@@ -55,11 +55,11 @@ mkdir -p ~/BeamMP
 curl -fsSL -o ~/BeamMP/beammp-steam.sh \
   https://raw.githubusercontent.com/dboggus/BeamMP-NotProton/main/beammp-steam.sh
 chmod +x ~/BeamMP/beammp-steam.sh            # don't skip this, Steam fails silently without it
-xattr -d com.apple.quarantine ~/BeamMP/beammp-steam.sh 2>/dev/null   # optional, see below
+xattr -d com.apple.quarantine ~/BeamMP/beammp-steam.sh 2>/dev/null   # only if you downloaded it in a browser, see below
 ~/BeamMP/beammp-steam.sh echo "script runs"  # should print: script runs
 ```
 
-> **About the `xattr` line:** browsers tag downloaded files with a `com.apple.quarantine` flag, which can make macOS block or prompt on files run outside Terminal. Removing the flag is a precaution, and the line does nothing if the flag isn't there. If `xattr ~/BeamMP/beammp-steam.sh` doesn't list `com.apple.quarantine`, you can skip it.
+> **About the `xattr` line:** browsers tag downloaded files with a `com.apple.quarantine` flag, which can make macOS block or prompt on files run outside Terminal. Files downloaded with `curl` don't get this flag, so if you used the command above you can skip this line. Removing the flag is a precaution, and the line does nothing if the flag isn't there. If `xattr ~/BeamMP/beammp-steam.sh` doesn't list `com.apple.quarantine`, you can also skip it.
 
 ### 4. Point Steam at the script
 
